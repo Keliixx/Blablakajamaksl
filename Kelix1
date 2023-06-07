@@ -1,5 +1,5 @@
---Shitty gem tracker by LEETcyanide
-local GainsOnly = false
+--Shitty gem tracker by LEETcyanide ( credit to him )
+local GainsOnly = false 
 
 
 local ServerCheck = false
