@@ -1,4 +1,4 @@
-wait(60)
+wait(1)
 local Players = game:GetService("Players")
 local API_URL = string.format("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Desc&limit=100", tostring(game.PlaceId))
 local Player = Players.LocalPlayer
