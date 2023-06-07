@@ -1,22 +1,33 @@
-local Player = game.Players.LocalPlayer    
+wait(60)
+local Players = game:GetService("Players")
+local API_URL = string.format("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Desc&limit=100", tostring(game.PlaceId))
+local Player = Players.LocalPlayer
+local TeleportService = game:GetService("TeleportService")
 local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
 
-local _place,_id = game.PlaceId, game.JobId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
+local function ServerHop()
+    function GetServers(cursor)
+        cursor = cursor and "&cursor=" .. cursor or ""
+        return Http:JSONDecode(game:HttpGet(API_URL .. cursor))
+    end
+
+    local cursor = nil
+    local teleported = false
+    while not teleported do 
+        local servers = GetServers(cursor)
+        for i,v in next, servers.data do
+            if v.playing and v.playing < game.Players.MaxPlayers and v.id ~= game.JobId then
+                local success ,_ = pcall(TeleportService.TeleportToPlaceInstance, TeleportService, game.PlaceId, v.id, Player)
+                if success then teleported = true break end -- Successfully teleported, break loop
+            end
+        end
+
+        cursor = servers.nextPageCursor
+        if teleported or not cursor then break end
+        -- wait so we don't spam roblox api
+        wait(0.1)
+    end
+    if teleported then print("Successfully teleported!") end
 end
 
-time_to_wait = 1 --seconds
-
--- choose a random server and join every ( seconds u put ) and a half  minutes
-while wait(time_to_wait) do
-   --freeze player before teleporting to prevent crash
-   Player.Character.HumanoidRootPart.Anchored = true
-   local Servers = ListServers()
-   local Server = Servers.data[math.random(1,#Servers.data)]
-   TPS:TeleportToPlaceInstance(_place, Server.id, Player)
-end
+ServerHop()
