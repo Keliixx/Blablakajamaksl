@@ -10,7 +10,7 @@ function ListServers(cursor)
    return Http:JSONDecode(Raw)
 end
 
-time_to_wait = 60 --seconds
+time_to_wait = 1 --seconds
 
 -- choose a random server and join every ( seconds u put ) and a half  minutes
 while wait(time_to_wait) do
