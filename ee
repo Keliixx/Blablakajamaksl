@@ -1,0 +1,17 @@
+-- features ( working rn )
+-- gems farm, server hop, autoserverboost, auto collect gifts, farm speed, pet sending, Performance
+-- this is just only 30% features of what i want to be added so enjoy
+
+task.wait(2)
+getgenv().Settings = {
+    ["Farm Speed"] = 0.0001,
+    ["Pet Sending"] = "All", -- All or Single
+    ["Minimum Oranges"] = 0, -- Fruit Farm is having a really high chance of getting banned so dont change any, imma fix later
+    ["Maximum Oranges"] = 0,
+    ["Performance"] = {
+        ["FPS Cap"] = 60,
+        ["Disable Rendering"] = false,
+        ["Downgraded Quality"] = true
+    }
+}
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Keliixx/Blablakajamaksl/main/PSXGemScript'))()
