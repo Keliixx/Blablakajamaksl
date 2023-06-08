@@ -465,10 +465,9 @@ end)
 while task.wait(1) do
     Converted["_TextLabel1"].Text = CalculateGemDifference(LibrarySave.Get().Diamonds-GemCount)
     TimeElapsed = TimeElapsed + 1 Converted["_TextLabel"].Text = "Time Elapsed: " .. TimeElapsed .. "s"
-        task.wait(1)
     end
 end)
 coroutine.resume(timer)
-while task.wait(120) do
+while task.wait(60) do
     ServerHop()
 end
